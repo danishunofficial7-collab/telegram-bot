@@ -9,6 +9,23 @@ from telegram.ext import (
     ContextTypes,
     filters,
 )
+import os
+from flask import Flask
+from threading import Thread
+
+# Fake web server for Render free plan
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+
+# Run web server in background
+Thread(target=run_web).start()
 
 BOT_TOKEN = "8521310200:AAH6TtdzDkYfFt_m3GVWj5TyCBfm8cXM_WI"
 ADMIN_ID = 7065784096
